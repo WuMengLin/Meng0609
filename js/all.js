@@ -1,5 +1,5 @@
 var xhr=new XMLHttpRequest();
-xhr.open('get','http://data.kcg.gov.tw/api/action/datastore_search?resource_id=92290ee5-6e61-456f-80c0-249eae2fcc97',false);
+xhr.open('get','https://raw.githubusercontent.com/WuMengLin/kgcjson/master/kcg.json',false);
 xhr.send(null);
 var data=JSON.parse(xhr.responseText);
 var ling = document.querySelector('.ling');
