@@ -1,7 +1,3 @@
-var xhr=new XMLHttpRequest();
-xhr.open('get','https://raw.githubusercontent.com/WuMengLin/kgcjson/master/kcg.json',false);
-xhr.send(null);
-var data=JSON.parse(xhr.responseText);
 var ling = document.querySelector('.ling');
 var san = document.querySelector('.san');
 var shin = document.querySelector('.shin');
@@ -13,6 +9,16 @@ var areaname = document.querySelector('.areaname');
 var prev = document.querySelector('.prev');
 var next = document.querySelector('.next');
 var pagenumber = document.querySelector('.pagenumber');
+
+var data=[];
+var xhr=new XMLHttpRequest();
+xhr.open('get','https://raw.githubusercontent.com/WuMengLin/kgcjson/master/kcg.json',true);
+xhr.send(null);
+xhr.onload=function(){
+    data=JSON.parse(xhr.responseText);
+    showarea('三民區');
+    buildropdownlist();
+}
 
 var allitem=0,allpage=0,nowpage=0;
 
@@ -43,7 +49,7 @@ function showarea(area){
     nowpage=1;
     PrevAndNext();
 }
-showarea('三民區');
+
 
 //建立對應數字列內容
 function changepage(e){
@@ -158,6 +164,10 @@ yan.addEventListener('click',function(e){
     dropdown.value='--請選擇行政區--';
 },false);
 
+
+
+//建立下拉式選單
+function buildropdownlist(){
 //取出所有行政區(不重複)
 var allarea=[];
 var a=0;
@@ -169,9 +179,6 @@ for(i=0;i<data.result.records.length;i++){
     }
     if(a==allarea.length){allarea.push(data.result.records[i].Zone);}
 }
-
-//建立下拉式選單
-function buildropdownlist(){
 var str ='<option value="--請選擇行政區--">--請選擇行政區--</option>';
 for(i=0;i<allarea.length;i++){
     var build = '<option value="'+allarea[i]+'">'+allarea[i]+'</option>';
@@ -179,7 +186,7 @@ for(i=0;i<allarea.length;i++){
 }
 dropdown.innerHTML=str;
 }
-buildropdownlist();
+
 
 //監聽下拉式選單
 dropdown.addEventListener('change',function(){
